@@ -8,7 +8,9 @@ public class PetsVSAnantou {
 		String weaponNames[] = {"chocolates", "champagne", "dabians", "eggs", "flowers"};
 		int weaponAttacks[] = {-20, 10, 50, 5, 0};
 		String bossName = "Nannanmama";
-		int bossLife = 1000;
+		double bossDodgeRate = 0.2;
+		int bossLife = 500;
+		int bossWinRound = 30;
 		int petAttacks[] = new int[petNames.length];
 		int petWeapons[] = new int[petNames.length];
 		
@@ -19,11 +21,15 @@ public class PetsVSAnantou {
 			print(petNames[i] + " grabs lots of " + weaponNames[petWeapons[i]] + ".");
 		}
 		
-		
+		int roundNumber = 0;
 		while (true) {
 			print("The pet rebels launch a new round of fierce attack on " + bossName + ".");
 			
 			for (int i=0; i<petNames.length; i++) {
+				if(Math.random() < bossDodgeRate) {
+					print(bossName + " dodged " +  petNames[i] + "'s attack!");
+					continue;
+				}
 				double hitRoll = Math.random();
 				if(hitRoll < 0.1) {
 					int damage = petAttacks[i] * 2;
@@ -48,8 +54,11 @@ public class PetsVSAnantou {
 			if (bossLife <= 0) {
 				print(bossName + " falls down before the pets!");
 				break;
-			} else if (bossLife > 5000) {
-				print(bossName + " is getting even stronger and suppressed the pet rebels.");
+			}
+			
+			roundNumber++;
+			if(roundNumber > bossWinRound) {
+				print(bossName + " endures " + bossWinRound + " rounds of attack and manages to flee the battle field!");
 				break;
 			}
 			
